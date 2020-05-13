@@ -1,0 +1,17 @@
+
+.login-form{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+    height:100% ;
+}
+.white-color{
+    color: white;
+    text-decoration-style: none;
+    
+}
+a:link,a:hover,a:active,a:active,a:visited{
+  
+  text-decoration: none;
+}
