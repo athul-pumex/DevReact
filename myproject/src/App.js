@@ -1,28 +1,40 @@
 import React from 'react';
-import './App.css'
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import Login from "./components/login.component";
+import SignUp from "./components/signup.component";
+
 function App() {
-  return (
-    <div className="Container">
-      <form className="login-form">
-        <h1 className="white-color"><span className="font-weight-bold white-color">MyWebsite</span>.com</h1>
-        <h2 className="text-center white-color">Welcome</h2>
-        <FormGroup>
-          <label className="white-color">Email</label>
-          <Input type="email" placeholder="Email" />
-          <label className="white-color">Password</label>
-          <Input type="password" placeholder="Password" />
-        </FormGroup>
-        <Button className="btn-lg btn-secondary btn-block">Log in</Button><br></br>
-        <div className="text-center white-color">
-          <a href="/sign-up">Sign up</a>
-          <span className="p-2">|</span>
-          <a href="/forgot-password">Forgot password</a>
+  return (<Router>
+    <div className="App">
+      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+        <div className="container">
+          <Link className="navbar-brand" to={"/sign-in"}><strong>MyWebsite.com</strong></Link>
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to={"/sign-in"}><strong>Login</strong></Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/sign-up"}><strong>Sign Up</strong></Link>
+              </li>
+            </ul>
+          </div>
         </div>
-      </form>
+      </nav>
 
-    </div>
-
+      <div className="auth-wrapper">
+        <div className="auth-inner">
+          <Switch>
+            <Route exact path='/' component={Login} />
+            <Route path="/sign-in" component={Login} />
+            <Route path="/sign-up" component={SignUp} />
+          </Switch>
+        </div>
+      </div>
+    </div></Router>
   );
 }
 
