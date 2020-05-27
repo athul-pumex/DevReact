@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { PostData } from "../services/PostData"
+import axios from 'axios';
 
 export default class Login extends Component {
 
@@ -10,27 +10,72 @@ export default class Login extends Component {
             email: '',
             password: ''
         }
-        this.login = this.login.bind(this)
+        // this.login = this.login.bind(this)
         this.onChange = this.onChange.bind(this)
-
+        this.login = this.login.bind(this);
     }
-
+    // Email(event) {
+    //     this.setState({ Email: event.target.value })
+    // }
+    // Password(event) {
+    //     this.setState({ Password: event.target.value })
+    // }
     //login function called on form submit
-    login() {
-        // event.preventDefault();
-        // event.stopPropagation();
-        console.log("hi login works")
-        PostData('getUserByEmailAndPassword', this.state).then((result) => {
-            let responseJSON = result;
-            console.log(responseJSON);
+    login(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        // console.log("hi login works")
+        // PostData('getUserByEmailAndPassword', this.state).then((result) => {
+        //     let responseJSON = result;
+        //     console.log(responseJSON);
+        // })
+        // axios.post('/http://localhost:8080/api/getUserByEmailAndPassword', {
+        //     email: e.email.value,
+        //     password: e.password.value
+        // })
+        //     .then((response) => {
+        //         console.log(response);
+        //     }, (error) => {
+        //         console.log(error);
+        //     });
+
+        // axios.post('http://localhost:8080/api/getUserByEmailAndPasswords', {
+        //     params: {
+        //         email: 'athul4040@gmail.com',
+        //         password: '123'
+        //     },
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
+        //     .then((response) => {
+        //         console.log(response);
+        //     }, (error) => {
+        //         console.log(error);
+        //     });
+
+        axios.post('http://localhost:8080/api/getUserByEmailAndPasswords', {
+            params: {
+                email: 'athul4040@gmail.com',
+                password: '123'
+                
+            },
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         })
-        console.log("hello")
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
 
     }
     onChange(e) {
-
         this.setState({ [e.target.name]: e.target.value });
-
     }
 
     render() {
