@@ -41,6 +41,7 @@ body, html, .App, #root, .auth-wrapper {
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
   transition: all .3s;
+  max-width: -webkit-fill-available;
 }
 
 .auth-wrapper .form-control:focus {
@@ -70,4 +71,22 @@ body, html, .App, #root, .auth-wrapper {
 
 .forgot-password a {
   color: #167bff;
+}
+.sign-in,
+.sign-in a {
+  text-align: right;
+  font-size: 15px;
+  padding-top: 10px;
+  color: #7f7d7d;
+  margin: 0;
+}
+
+.sign-in a {
+  color: #167bff;
+}
+
+@media screen and (max-width: 600px) {
+  .auth-wrapper {
+    padding: 22px;
+  }
 }

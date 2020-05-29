@@ -7,6 +7,7 @@ import Login from "./components/login.component";
 import SignUp from "./components/signup.component";
 import ForgotPassword from "./components/forgotPassword.component";
 import UpdatePassword from "./components/updatePassword.component";
+import Dashboard from './components/dashboard.component';
 function App() {
   return (<Router>
     <div className="App">
@@ -34,6 +35,7 @@ function App() {
             <Route path="/sign-up" component={SignUp} />
             <Route path="/forgotPassword" component={ForgotPassword} />
             <Route path="/updatePassword" component={UpdatePassword} />
+            <Route path="/dashboard" component={Dashboard} />
           </Switch>
         </div>
       </div>

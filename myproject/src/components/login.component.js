@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default class Login extends Component {
 
@@ -10,73 +13,58 @@ export default class Login extends Component {
             email: '',
             password: ''
         }
-        // this.login = this.login.bind(this)
         this.onChange = this.onChange.bind(this)
         this.login = this.login.bind(this);
     }
-    // Email(event) {
-    //     this.setState({ Email: event.target.value })
-    // }
-    // Password(event) {
-    //     this.setState({ Password: event.target.value })
-    // }
+
     //login function called on form submit
     login(event) {
         event.preventDefault();
         event.stopPropagation();
-        // console.log("hi login works")
-        // PostData('getUserByEmailAndPassword', this.state).then((result) => {
-        //     let responseJSON = result;
-        //     console.log(responseJSON);
-        // })
-        // axios.post('/http://localhost:8080/api/getUserByEmailAndPassword', {
-        //     email: e.email.value,
-        //     password: e.password.value
-        // })
-        //     .then((response) => {
-        //         console.log(response);
-        //     }, (error) => {
-        //         console.log(error);
-        //     });
 
-        // axios.post('http://localhost:8080/api/getUserByEmailAndPasswords', {
-        //     params: {
-        //         email: 'athul4040@gmail.com',
-        //         password: '123'
-        //     },
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
-        //     .then((response) => {
-        //         console.log(response);
-        //     }, (error) => {
-        //         console.log(error);
-        //     });
-
-        axios.post('http://localhost:8080/api/getUserByEmailAndPasswords', {
-            params: {
-                email: 'athul4040@gmail.com',
-                password: '123'
-                
-            },
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+        var body = {}
+        var params = {
+            "email": this.state.email,
+            "password": this.state.password
+        }
+        var headerOption = {
+            "headers": {
+                "Content-Type": "application/json"
             }
+        }
+        axios.post('http://localhost:8080/api/getUserByEmailAndPasswords', body, {
+            params: params,
+            headerOption
         })
-            .then(function (response) {
+            .then((response) => {
                 console.log(response);
+                if (response.data.message === "Success") {
+                    console.log("hi")
+                    toast.info("Logged in successsfully")
+                    setTimeout(() => {
+                        this.props.history.push("/dashboard");
+                    }, 3000);
+
+                }
+                else {
+                    // toast(response.data.message);
+                    toast.info(response.data.message);
+                }
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
+                toast.info("Something went wrong, Please try again later");
             })
 
     }
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
+    // prependBaseUrl(url, corsProxy = false) {
+    //     return IS_DEBUG && corsProxy
+    //         ? `https://cors-anywhere.herokuapp.com/${BASE_URL}/${url}`
+    //         : `${BASE_URL}/${url}`;dashboard.component
+    // }
 
     render() {
         return (
@@ -101,6 +89,7 @@ export default class Login extends Component {
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-block" >Submit</button>
+                <div><ToastContainer hideProgressBar={true} position="bottom-center" /></div>
                 <p className="forgot-password text-right">
                     <Link className="nav-link" to={"/forgotPassword"}> Forgot password?</Link>
                 </p>
