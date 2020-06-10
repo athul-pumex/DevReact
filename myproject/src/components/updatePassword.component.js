@@ -65,16 +65,20 @@ export default class UpdatePassword extends Component {
     }
     render() {
         return (
-            <form onSubmit={this.resetpassword}> <h3>Reset your password</h3><br></br>
-                <div className="form-group">
-                    <label>New Password</label>
-                    <input name="newpassword" type="password" className="form-control" placeholder="Enter new password" required onChange={this.onChange} /><br></br>
-                    <label>Confirm Password</label>
-                    <input name="confirmpassword" type="password" className="form-control" placeholder="Confirm new password" required onChange={this.onChange} /><br></br>
-                    <button type="submit" className="btn btn-primary btn-block">Reset Password</button>
-                    <ToastContainer hideProgressBar={true} position="bottom-center" />
+            <div className="auth-wrapper">
+                <div className="auth-inner">
+                    <form onSubmit={this.resetpassword}> <h3>Reset your password</h3><br></br>
+                        <div className="form-group">
+                            <label>New Password</label>
+                            <input name="newpassword" type="password" className="form-control" placeholder="Enter new password" required onChange={this.onChange} /><br></br>
+                            <label>Confirm Password</label>
+                            <input name="confirmpassword" type="password" className="form-control" placeholder="Confirm new password" required onChange={this.onChange} /><br></br>
+                            <button type="submit" className="btn btn-primary btn-block">Reset Password</button>
+                            <ToastContainer hideProgressBar={true} position="bottom-center" />
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         );
     }
 }

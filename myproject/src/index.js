@@ -8,6 +8,7 @@ import * as serviceWorker from "./serviceWorker";
 ReactDOM.render(
     <BrowserRouter>
         <App />
+        {/* <TestApp /> */}
     </BrowserRouter>,
     document.getElementById("root")
 );

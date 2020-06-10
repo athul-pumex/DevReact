@@ -56,15 +56,18 @@ export default class ForgotPassword extends Component {
     }
     render() {
         return (
-            <form onSubmit={this.forgotpasswordsendmail}> <h3>Find your Account</h3><br></br>
-                <div className="form-group">
-                    <label>Please enter your Email address </label>
-                    <input name="email" type="email" className="form-control" required placeholder="Enter email" onChange={this.onChange} /><br></br>
-                    <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                    <ToastContainer hideProgressBar={true} position="bottom-center" />
+            <div className="auth-wrapper">
+                <div className="auth-inner">
+                    <form onSubmit={this.forgotpasswordsendmail}> <h3>Find your Account</h3><br></br>
+                        <div className="form-group">
+                            <label>Please enter your Email address </label>
+                            <input name="email" type="email" className="form-control" required placeholder="Enter email" onChange={this.onChange} /><br></br>
+                            <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                            <ToastContainer hideProgressBar={true} position="bottom-center" />
+                        </div>
+                    </form>
                 </div>
-            </form>
-
+            </div>
         );
     }
 }

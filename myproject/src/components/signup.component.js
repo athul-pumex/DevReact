@@ -9,7 +9,8 @@ export default class SignUp extends Component {
             email: '',
             password: '',
             fname: '',
-            lname: ''
+            lname: '',
+            role: ''
 
         }
         this.onChange = this.onChange.bind(this)
@@ -26,7 +27,8 @@ export default class SignUp extends Component {
             "email": this.state.email,
             "password": this.state.password,
             "firstname": this.state.fname,
-            "lastname": this.state.lname
+            "lastname": this.state.lname,
+            "role": this.state.role
         }
         var headerOption = {
             "headers": {
@@ -63,37 +65,63 @@ export default class SignUp extends Component {
     }
     render() {
         return (
-            <form onSubmit={this.signup}>
-                <h3>Sign Up</h3>
+            <div className="App">
+                <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+                    <div className="container">
+                        <Link className="navbar-brand" to={"/sign-in"}><strong>MyWebsite.com</strong></Link>
+                        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <ul className="navbar-nav ml-auto">
+                                <li className="nav-item">
+                                    <Link className="nav-link" to={"/sign-in"}><strong>Login</strong></Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to={"/sign-up"}><strong>Sign Up</strong></Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div className="auth-wrapper">
+                    <div className="auth-inner">
+                        <form onSubmit={this.signup}>
+                            <h3>Sign Up</h3>
 
-                <div className="form-group">
-                    <label>First name</label>
-                    <input name="fname" type="text" className="form-control" placeholder="First name" onChange={this.onChange} />
-                </div>
+                            <div className="form-group">
+                                <label>First name</label>
+                                <input name="fname" type="text" className="form-control" placeholder="First name" onChange={this.onChange} required />
+                            </div>
 
-                <div className="form-group">
-                    <label>Last name</label>
-                    <input name="lname" type="text" className="form-control" placeholder="Last name" onChange={this.onChange} />
-                </div>
+                            <div className="form-group">
+                                <label>Last name</label>
+                                <input name="lname" type="text" className="form-control" placeholder="Last name" onChange={this.onChange} required />
+                            </div>
 
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={this.onChange} />
-                </div>
+                            <div className="form-group">
+                                <label>Role</label>
+                                <select name="role" className="form-control" required onChange={this.onChange}>
+                                    <option value="" disabled selected>Choose your role</option>
+                                    {/* <option value="Admin">Admin</option> */}
+                                    <option value="Customer">Customer</option>
+                                    <option value="Photographer">Photographer</option>
+                                </select>
+                            </div>
 
+                            <div className="form-group">
+                                <label>Email address</label>
+                                <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={this.onChange} />
+                            </div>
+                            <div className="form-group">
+                                <label>Password</label>
+                                <input name="password" type="password" className="form-control" placeholder="Enter password" onChange={this.onChange} />
+                            </div>
 
-
-                <div className="form-group">
-                    <label>Password</label>
-                    <input name="password" type="password" className="form-control" placeholder="Enter password" onChange={this.onChange} />
-                </div>
-
-                <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-                <ToastContainer hideProgressBar={true} position="bottom-center" />
-                <p className="forgot-password text-right">
-                    <Link className="sign-in" to={"/sign-in"}>Sign in?</Link>
-                </p>
-            </form>
+                            <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                            <ToastContainer hideProgressBar={true} position="bottom-center" timeOut="2000" />
+                            <p className="forgot-password text-right">
+                                <Link className="sign-in" to={"/sign-in"}>Sign in?</Link>
+                            </p>
+                        </form></div></div>
+            </div>
         );
     }
 }
