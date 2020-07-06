@@ -18,3 +18,21 @@
   color: antiquewhite;
   font-weight: bold;
 }
+#limit {
+  width: auto;
+  height: auto;
+}
+.show-limit {
+  float: left;
+  color: antiquewhite;
+  padding-right: 1rem;
+}
+.inline {
+  display: -webkit-inline-flex;
+  display: inline-flex;
+
+  button {
+    right: 5rem;
+    position: absolute;
+  }
+}

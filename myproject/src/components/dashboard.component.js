@@ -8,6 +8,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { FaStepBackward, FaUsers, FaIdCard, FaStepForward } from "react-icons/fa";
 
+
 export default class Dashboard extends Component {
 
     constructor(props) {
@@ -56,9 +57,20 @@ export default class Dashboard extends Component {
         })
     }
     onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-        console.log(this.state)
+        this.setState({ [e.target.name]: e.target.value })
+
     }
+    // onLimitChange = e => {
+    //     this.setState({ limit: e.target.value }), () => {
+    //         console.log(this.state.limit)
+    //         this.refreshList(this.state.currentPage)
+    //     }
+    // }
+    onLimitChange = event => {
+        this.setState({ limit: event.target.value }, () => {
+            this.refreshList(this.state.currentPage)
+        });
+    };
     onChangeEdit(e) {
         // this.setState({ [e.editUserData.target.name]: e.target.value });
         // console.log(this.state.editUserData)
@@ -181,7 +193,6 @@ export default class Dashboard extends Component {
     }
     getTotalUserAPI() {
         Axios.get("http://localhost:8080/api/getTotalUsers").then((response) => {
-            console.log("count=" + response.data)
             this.setState({
                 totalUsers: response.data,
 
@@ -268,15 +279,15 @@ export default class Dashboard extends Component {
 
 
     }
+
     render() {
 
-        let users = this.state.users.map((user) => {
-            // let counter = this.state.counter
-            // this.setState({ counter: counter + 1 })
-           
+        let users = this.state.users.map((user, index) => {
+            let pgNO = this.state.currentPage
+            let pageSize = this.state.limit
             return (
-                <tr key={user.id}>
-                    <td></td>
+                <tr key={index}>
+                    <td>{((pgNO - 1) * pageSize) + index + 1}</td>
                     <td>{user.firstName}</td>
                     <td>{user.lastName}</td>
                     <td>{user.role}</td>
@@ -292,8 +303,10 @@ export default class Dashboard extends Component {
         return (
             <div className="dash-container">
                 <br></br>
-                <h3> <FaIdCard className="dash-icon" /> Dashboard</h3>
-                <div><Link to="/sign-in">Logout</Link></div>
+
+                <div className="inline"><h3><FaIdCard className="dash-icon" /> Dashboard</h3><Button color="primary" className="logout-btn"><Link to="/sign-in">Logout</Link></Button>
+                </div>
+                <div></div>
                 <div className="dash-table-container">
                     <div>
                         <div className="userDetails"><h3 >User Details <FaUsers color="white" /></h3></div>
@@ -306,30 +319,31 @@ export default class Dashboard extends Component {
                         <ModalHeader toggle={this.toggleNewUserModal.bind(this)}>Add a new user</ModalHeader>
                         <ModalBody>
                             <div className="form-group">
-                                <label>First name</label>
+                                <label>First name   <span className="color-red ">*</span></label>
                                 <input name="fname" type="text" className="form-control" placeholder="First name" onChange={this.onChange.bind(this)} required />
                             </div>
 
                             <div className="form-group">
-                                <label>Last name</label>
+                                <label>Last name   <span className="color-red ">*</span></label>
                                 <input name="lname" type="text" className="form-control" placeholder="Last name" onChange={this.onChange.bind(this)} required />
                             </div>
 
                             <div className="form-group">
-                                <label>Role</label>
+                                <label>Role   <span className="color-red ">*</span></label>
                                 <select name="role" className="form-control" required onChange={this.onChange.bind(this)}>
-                                    <option value="" disabled selected>Choose your role</option>
+                                    <option value="" disabled defaultValue>Choose your role</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Customer">Customer</option>
                                     <option value="Photographer">Photographer</option>
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label>Email address</label>
+                                <label>Email address   <span className="color-red ">*</span></label>
                                 <input name="email" type="email" className="form-control" placeholder="Enter email" onChange={this.onChange.bind(this)} />
                             </div>
+                            <label className="color-red " style={{ fontSize: "14px" }}>All fields marked in * are mandatory.</label>
                         </ModalBody>
-                        <ModalFooter>
+                        <ModalFooter style={{ border: "none" }}>
                             <Button color="primary" onClick={this.addUser.bind(this)}>Add User</Button>{' '}
                             <Button color="secondary" onClick={this.toggleNewUserModal.bind(this)}>Cancel</Button>
                         </ModalFooter>
@@ -339,7 +353,7 @@ export default class Dashboard extends Component {
                         <ModalHeader toggle={this.toggleEditUserModal.bind(this)}>Edit a user</ModalHeader>
                         <ModalBody>
                             <div className="form-group">
-                                <label>First name</label>
+                                <label>First name </label>
                                 <input required name="fname" value={this.state.editUserData.fname} type="text" className="form-control" placeholder="First name" onChange={(e) => {
                                     let { editUserData } = this.state
                                     editUserData.fname = e.target.value
@@ -363,7 +377,7 @@ export default class Dashboard extends Component {
                                     editUserData.role = e.target.value
                                     this.setState({ editUserData })
                                 }} >
-                                    <option value="" disabled selected>Choose your role</option>
+                                    <option value="" disabled defaultValue>Choose your role</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Customer">Customer</option>
                                     <option value="Photographer">Photographer</option>
@@ -399,7 +413,13 @@ export default class Dashboard extends Component {
                             {users}
                         </tbody>
                     </Table>
-                    {/* <Button><FaFastBackward color="white" /></Button> */}
+                    {/* <Button><FaFastBackward color="white" /></Button> */}<br></br>
+                    <span className="show-limit">Show entries per page</span>
+                    <select id="limit" name="limit" className="form-control" required onChange={this.onLimitChange.bind(this)}>
+                        <option value="5" defaultValue>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                    </select>
                     <Button disabled={this.state.isValid} onClick={this.navigateStepbackward.bind(this)}><FaStepBackward color="white" /></Button>
                     <Button>{this.state.navigateNo}</Button>
                     <Button disabled={this.state.isDisabled} onClick={this.navigateStepForward.bind(this)}><FaStepForward color="white" /></Button>
